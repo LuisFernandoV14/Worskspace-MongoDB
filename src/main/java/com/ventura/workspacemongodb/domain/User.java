@@ -2,12 +2,13 @@ package com.ventura.workspacemongodb.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter @Setter // This tag automatically makes getters and setter for every Attribute in User
+@Getter @Setter @Document
 public class User implements Serializable {
 
     // Serial number

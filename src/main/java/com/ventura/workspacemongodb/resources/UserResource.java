@@ -1,27 +1,25 @@
 package com.ventura.workspacemongodb.resources;
 
 import com.ventura.workspacemongodb.domain.User;
+import com.ventura.workspacemongodb.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController @RequestMapping(value="/users")
 public class UserResource {
 
+    @Autowired
+    private UserService uService;
+
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        User user1 = new User("14", "Maria Brown", "maria@gmail.com");
-        User user2 = new User("12", "Jorge Orange", "jorge@gmail.com");
-
-        List<User> users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-
-        return ResponseEntity.ok().body(users);
+        List<User> users = uService.findAll();
+        return ResponseEntity.ok(users);
     }
 
 }
