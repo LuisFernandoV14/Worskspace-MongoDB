@@ -1,5 +1,6 @@
 package com.ventura.workspacemongodb.resources;
 
+import com.ventura.workspacemongodb.DTO.UserDTO;
 import com.ventura.workspacemongodb.domain.User;
 import com.ventura.workspacemongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController @RequestMapping(value="/users")
 public class UserResource {
@@ -17,9 +20,10 @@ public class UserResource {
     private UserService uService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = uService.findAll();
-        return ResponseEntity.ok(users);
+        List<UserDTO> userDTOs = users.stream().map(UserDTO::new).toList();
+        return ResponseEntity.ok(userDTOs);
     }
 
 }
