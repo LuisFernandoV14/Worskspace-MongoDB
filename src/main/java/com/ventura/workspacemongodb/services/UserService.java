@@ -1,6 +1,5 @@
 package com.ventura.workspacemongodb.services;
 
-import com.ventura.workspacemongodb.DTO.UserDTO;
 import com.ventura.workspacemongodb.domain.User;
 import com.ventura.workspacemongodb.repositories.UserRepository;
 import com.ventura.workspacemongodb.services.exceptions.BadRequestException;
@@ -42,5 +41,14 @@ public class UserService {
         if (u == null) {
             throw new ObjectNotFoundException("Tried to delete a user that does not exist.");
         } else uRepo.deleteById(id);
+    }
+
+    public User update(String id, User user) throws BadRequestException {
+        Optional<User> u = uRepo.findById(id);
+        if (u.isPresent()) {
+            u.get().setEmail(user.getEmail());
+            u.get().setName(user.getName());
+            return uRepo.save(u.get());
+        } else throw new BadRequestException("Tried to update a user that does not exist.");
     }
 }

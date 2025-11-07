@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController @RequestMapping(value="/users")
 public class UserResource {
@@ -51,6 +48,14 @@ public class UserResource {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable String id, @RequestBody UserDTO userDTO) {
+        User user = uService.update(id, UserMapper.fromDTO(userDTO));
+
+        return ResponseEntity.ok(UserMapper.toDTO(user));
+    }
+
 
 }
 
