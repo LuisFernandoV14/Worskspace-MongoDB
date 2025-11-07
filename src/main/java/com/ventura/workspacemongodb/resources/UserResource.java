@@ -1,12 +1,15 @@
 package com.ventura.workspacemongodb.resources;
 
 import com.ventura.workspacemongodb.DTO.UserDTO;
+import com.ventura.workspacemongodb.UserMapper;
 import com.ventura.workspacemongodb.domain.User;
 import com.ventura.workspacemongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,16 +24,29 @@ public class UserResource {
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = uService.findAll();
-        List<UserDTO> userDTOs = users.stream().map(UserDTO::new).toList();
+        List<UserDTO> userDTOs = users.stream().map(UserMapper::toDTO).toList();
         return ResponseEntity.ok(userDTOs);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
         User user = uService.findById(id);
-        UserDTO userDTO = new UserDTO(user);
+        UserDTO userDTO = UserMapper.toDTO(user);
         return ResponseEntity.ok(userDTO);
     }
+
+    @RequestMapping
+    public ResponseEntity<Void> insertUser(@RequestBody UserDTO userDTO) {
+        User user = UserMapper.fromDTO(userDTO);
+        user =  uService.insert(user);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
+
+
 
 }
 

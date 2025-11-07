@@ -1,5 +1,6 @@
 package com.ventura.workspacemongodb.services;
 
+import com.ventura.workspacemongodb.DTO.UserDTO;
 import com.ventura.workspacemongodb.domain.User;
 import com.ventura.workspacemongodb.repositories.UserRepository;
 import com.ventura.workspacemongodb.services.exceptions.ObjectNotFoundException;
@@ -21,7 +22,10 @@ public class UserService {
     }
 
     public User findById(String id) throws ObjectNotFoundException {
-        Optional<User> user = uRepo.findById(id);
-        return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
+        return uRepo.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found"));
+    }
+
+    public User insert(User user) {
+        return uRepo.insert(user);
     }
 }
