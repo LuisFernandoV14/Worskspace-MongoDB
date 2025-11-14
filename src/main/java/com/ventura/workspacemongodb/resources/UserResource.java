@@ -35,7 +35,7 @@ public class UserResource {
         return ResponseEntity.ok(userDTO);
     }
 
-    @RequestMapping
+    @PostMapping
     public ResponseEntity<Void> insertUser(@RequestBody UserDTO userDTO) {
         User user = UserMapper.fromDTO(userDTO);
         user =  uService.insert(user);

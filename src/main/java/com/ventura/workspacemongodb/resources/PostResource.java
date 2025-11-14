@@ -34,7 +34,7 @@ public class PostResource {
         return ResponseEntity.ok(post);
     }
 
-    @RequestMapping
+    @PostMapping
     public ResponseEntity<Void> insertPost (@RequestBody PostDTO postDTO) {
         Post post = PostMapper.fromDTO(postDTO);
         post = pService.insert(post);

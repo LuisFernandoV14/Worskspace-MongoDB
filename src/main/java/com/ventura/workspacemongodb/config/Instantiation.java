@@ -27,18 +27,31 @@ public class Instantiation implements CommandLineRunner {
     @Override
     public void run(String... args) {
         uRepo.deleteAll();
+        pRepo.deleteAll();
 
+        // Create Users
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
+        // Save users
         uRepo.saveAll(Arrays.asList(maria, alex, bob));
 
+        // Create posts
         Post post1 = new Post(null, LocalDate.of(2025, 3, 31), "I'm going to the beach!", "I'm going to Salvador in December, really excited.", maria.getId());
         Post post2 = new Post(null, LocalDate.of(2025, 3, 23), "Good day!", "Woke up happy today", alex.getId());
         Post post3 = new Post(null, LocalDate.of(2025, 10, 8), "Happy birthday to me!", "Today is my birthday", maria.getId());
 
+        // Save posts
         pRepo.saveAll(Arrays.asList(post1, post2, post3));
+
+        // Link users with posts
+        maria.getPostsId().addAll(Arrays.asList(post1.getId(), post3.getId()));
+        alex.getPostsId().add(post2.getId());
+
+        // Save users with posts
+        uRepo.saveAll(Arrays.asList(maria, alex));
+
     }
 }
 
