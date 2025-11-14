@@ -3,6 +3,7 @@ package com.ventura.workspacemongodb.services;
 import com.ventura.workspacemongodb.domain.Post;
 import com.ventura.workspacemongodb.exceptions.BadRequestException;
 import com.ventura.workspacemongodb.exceptions.ObjectNotFoundException;
+import com.ventura.workspacemongodb.repositories.CommentRepository;
 import com.ventura.workspacemongodb.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,12 @@ import java.util.Optional;
 @Service
 public class PostService {
 
+    private final PostRepository pRepo;
+
     @Autowired
-    private PostRepository pRepo;
+    public PostService(PostRepository pRepo) {
+        this.pRepo = pRepo;
+    }
 
     public List<Post> findAll() {
         if (pRepo.count() == 0) { throw new ObjectNotFoundException("Post collection is empty."); }
@@ -49,5 +54,4 @@ public class PostService {
             } else throw new BadRequestException("An user tried to update a post from another user.");
         } else throw new BadRequestException("Tried to update a user that does not exist.");
     }
-
 }

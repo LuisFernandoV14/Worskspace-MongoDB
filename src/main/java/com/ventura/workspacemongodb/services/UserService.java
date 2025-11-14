@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private final UserRepository uRepo;
+
     @Autowired
-    private UserRepository uRepo;
+    public UserService(UserRepository uRepo) {
+        this.uRepo = uRepo;
+    }
 
     public List<User> findAll() throws ObjectNotFoundException {
         if (uRepo.count() == 0) { throw new ObjectNotFoundException("User collection is empty."); }
