@@ -1,5 +1,6 @@
 package com.ventura.workspacemongodb.DTO;
 
+import com.ventura.workspacemongodb.domain.Comment;
 import com.ventura.workspacemongodb.domain.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,13 +8,15 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 public class PostDTO implements Serializable {
 
     // Serial Number
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     // Attributes
     private String id;
@@ -22,6 +25,7 @@ public class PostDTO implements Serializable {
     private String body;
 
     private String authorId;
+    private List<Comment> comments = new ArrayList<>();
 
     // Constructors
     public PostDTO (Post post) {
