@@ -1,4 +1,4 @@
-package com.ventura.workspacemongodb;
+package com.ventura.workspacemongodb.mappers;
 
 import com.ventura.workspacemongodb.DTO.UserDTO;
 import com.ventura.workspacemongodb.domain.User;

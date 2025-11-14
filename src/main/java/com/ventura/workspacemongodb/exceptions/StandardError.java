@@ -1,4 +1,4 @@
-package com.ventura.workspacemongodb.resources.exceptions;
+package com.ventura.workspacemongodb.exceptions;
 
 import lombok.Setter;
 import lombok.Getter;

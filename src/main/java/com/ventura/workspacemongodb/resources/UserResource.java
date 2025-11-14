@@ -1,7 +1,7 @@
 package com.ventura.workspacemongodb.resources;
 
 import com.ventura.workspacemongodb.DTO.UserDTO;
-import com.ventura.workspacemongodb.UserMapper;
+import com.ventura.workspacemongodb.mappers.UserMapper;
 import com.ventura.workspacemongodb.domain.User;
 import com.ventura.workspacemongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +12,26 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RestController @RequestMapping(value="/users")
+@RestController @RequestMapping(value = "/users")
 public class UserResource {
 
+    private final UserService uService;
+
     @Autowired
-    private UserService uService;
+    public UserResource(UserService uService) {
+        this.uService = uService;
+    }
+
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<User> users = uService.findAll();
-        List<UserDTO> userDTOs = users.stream().map(UserMapper::toDTO).toList();
+        List<UserDTO> userDTOs = uService.findAll().stream().map(UserMapper::toDTO).toList();
         return ResponseEntity.ok(userDTOs);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
-        User user = uService.findById(id);
-        UserDTO userDTO = UserMapper.toDTO(user);
+        UserDTO userDTO = UserMapper.toDTO(uService.findById(id));
         return ResponseEntity.ok(userDTO);
     }
 

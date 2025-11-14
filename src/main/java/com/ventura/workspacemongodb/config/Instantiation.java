@@ -1,18 +1,28 @@
 package com.ventura.workspacemongodb.config;
 
+import com.ventura.workspacemongodb.domain.Post;
 import com.ventura.workspacemongodb.domain.User;
+import com.ventura.workspacemongodb.repositories.PostRepository;
 import com.ventura.workspacemongodb.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
 
+    private final UserRepository uRepo;
+    private final PostRepository pRepo;
+
+
     @Autowired
-    private UserRepository uRepo;
+    public Instantiation (UserRepository uRepo, PostRepository pRepo) {
+        this.uRepo = uRepo;
+        this.pRepo = pRepo;
+    }
 
     @Override
     public void run(String... args) {
@@ -23,6 +33,12 @@ public class Instantiation implements CommandLineRunner {
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
         uRepo.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, LocalDate.of(2025, 3, 31), "I'm going to the beach!", "I'm going to Salvador in December, really excited.", maria.getId());
+        Post post2 = new Post(null, LocalDate.of(2025, 3, 23), "Good day!", "Woke up happy today", alex.getId());
+        Post post3 = new Post(null, LocalDate.of(2025, 10, 8), "Happy birthday to me!", "Today is my birthday", maria.getId());
+
+        pRepo.saveAll(Arrays.asList(post1, post2, post3));
     }
 }
 

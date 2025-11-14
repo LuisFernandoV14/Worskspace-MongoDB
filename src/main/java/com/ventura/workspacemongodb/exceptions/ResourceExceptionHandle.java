@@ -1,7 +1,5 @@
-package com.ventura.workspacemongodb.resources.exceptions;
+package com.ventura.workspacemongodb.exceptions;
 
-import com.ventura.workspacemongodb.services.exceptions.BadRequestException;
-import com.ventura.workspacemongodb.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

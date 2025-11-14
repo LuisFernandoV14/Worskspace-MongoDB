@@ -1,4 +1,4 @@
-package com.ventura.workspacemongodb.services.exceptions;
+package com.ventura.workspacemongodb.exceptions;
 
 import java.io.Serial;
 
