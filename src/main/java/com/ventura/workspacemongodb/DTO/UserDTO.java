@@ -23,7 +23,6 @@ public class UserDTO implements Serializable {
     private String name;
     private String email;
 
-    @DBRef
     private List<String> postsId = new ArrayList<>();
 
     // Constructors

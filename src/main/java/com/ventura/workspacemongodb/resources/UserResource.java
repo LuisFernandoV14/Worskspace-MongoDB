@@ -1,8 +1,10 @@
 package com.ventura.workspacemongodb.resources;
 
 import com.ventura.workspacemongodb.DTO.UserDTO;
+import com.ventura.workspacemongodb.domain.Post;
 import com.ventura.workspacemongodb.mappers.UserMapper;
 import com.ventura.workspacemongodb.domain.User;
+import com.ventura.workspacemongodb.services.PostService;
 import com.ventura.workspacemongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController @RequestMapping(value = "/users")
 public class UserResource {
 
     private final UserService uService;
+    private final PostService pService;
 
     @Autowired
-    public UserResource(UserService uService) {
+    public UserResource(UserService uService,  PostService pService) {
         this.uService = uService;
+        this.pService = pService;
     }
 
 
@@ -59,6 +64,15 @@ public class UserResource {
         return ResponseEntity.ok(UserMapper.toDTO(user));
     }
 
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> getPostsByUserId(@PathVariable String id) {
+        User user = uService.findById(id);
+        List<Post> posts = new ArrayList<>();
+
+        user.getPostsId().forEach(x -> posts.add(pService.findById(x)));
+
+        return ResponseEntity.ok(posts);
+    }
 
 }
 
