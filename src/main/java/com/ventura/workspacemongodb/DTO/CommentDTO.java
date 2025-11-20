@@ -4,8 +4,6 @@ import com.ventura.workspacemongodb.domain.Comment;
 import com.ventura.workspacemongodb.domain.Post;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,7 +22,7 @@ public class CommentDTO implements Serializable {
     private LocalDate date;
     private String authorId;
 
-    private Post post;
+    private String postId;
 
     // Constructors
     public CommentDTO (Comment comment) {
@@ -32,7 +30,7 @@ public class CommentDTO implements Serializable {
         this.text = comment.getText();
         this.date = comment.getDate();
         this.authorId = comment.getAuthorId();
-        this.post = comment.getPost();
+        this.postId = comment.getPost().getId();
     }
     public CommentDTO () {}
 }

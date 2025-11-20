@@ -1,5 +1,6 @@
 package com.ventura.workspacemongodb.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -25,7 +26,7 @@ public class Comment implements Serializable {
     private LocalDate date;
     private String authorId;
 
-    @DBRef
+    @DBRef @JsonBackReference
     private Post post;
 
     // Constructors

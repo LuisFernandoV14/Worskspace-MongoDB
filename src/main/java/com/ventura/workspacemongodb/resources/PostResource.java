@@ -1,9 +1,13 @@
 package com.ventura.workspacemongodb.resources;
 
+import com.ventura.workspacemongodb.DTO.CommentDTO;
 import com.ventura.workspacemongodb.DTO.PostDTO;
+import com.ventura.workspacemongodb.domain.Comment;
 import com.ventura.workspacemongodb.domain.Post;
+import com.ventura.workspacemongodb.mappers.CommentMapper;
 import com.ventura.workspacemongodb.mappers.PostMapper;
 import com.ventura.workspacemongodb.services.PostService;
+import com.ventura.workspacemongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +61,4 @@ public class PostResource {
 
         return ResponseEntity.ok(PostMapper.toDTO(post));
     }
-
 }
